@@ -17,7 +17,7 @@ class User(Base, TimeMixin, DeleteMixin):
     password = Column(String(255), nullable=False)
     full_name = Column(String(255), nullable=True)
 
-    organization_id = Column(Integer, ForeignKey("organizations.id"), nullable=False)
+    organization_id = Column(Integer, ForeignKey("organizations.id"), nullable=True)
     organization = relationship("Organization", back_populates="users")
 
     role = Column(Enum(RoleEnum), default=RoleEnum.MEMBER, nullable=False)
