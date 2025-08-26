@@ -55,6 +55,19 @@ def require_admin(current_user: User = Depends(get_current_user)):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not enough permissions")
     return True
 
+def require_manager(current_user: User = Depends(get_current_user)):
+    if current_user.role != RoleEnum.MANAGER:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not enough permissions")
+    return True
+
+def require_admin_or_manager(current_user: User = Depends(get_current_user)):
+    if current_user.role not in [RoleEnum.ADMIN, RoleEnum.MANAGER]:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Not enough permissions"
+        )
+    return True
+
 def get_password_hash(password: str) -> str:
     return pwd_context.hash(password)
 
