@@ -9,7 +9,7 @@ from app.routers import (
     projects,
     tasks,
     comments,
-    # attachments,
+    attachments,
     # notifications,
     # reports,
 )
@@ -41,7 +41,7 @@ app.include_router(organizations.router, prefix="/api/v1", tags=["Organizations"
 app.include_router(projects.router, prefix="/api/v1", tags=["Projects"])
 app.include_router(tasks.router, prefix="/api/v1", tags=["Tasks"])
 app.include_router(comments.router, prefix="/api/v1", tags=["Comments"])
-# app.include_router(attachments.router, prefix="/api/v1", tags=["Attachments"])
+app.include_router(attachments.router, prefix="/api/v1", tags=["Attachments"])
 # app.include_router(notifications.router, prefix="/api/v1", tags=["Notifications"])
 # app.include_router(reports.router, prefix="/api/v1", tags=["Reports"])
 
