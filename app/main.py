@@ -11,7 +11,7 @@ from app.routers import (
     comments,
     attachments,
     # notifications,
-    # reports,
+    reports,
 )
 
 app = FastAPI(
@@ -43,7 +43,7 @@ app.include_router(tasks.router, prefix="/api/v1", tags=["Tasks"])
 app.include_router(comments.router, prefix="/api/v1", tags=["Comments"])
 app.include_router(attachments.router, prefix="/api/v1", tags=["Attachments"])
 # app.include_router(notifications.router, prefix="/api/v1", tags=["Notifications"])
-# app.include_router(reports.router, prefix="/api/v1", tags=["Reports"])
+app.include_router(reports.router, prefix="/api/v1", tags=["Reports"])
 
 
 @app.get("/")

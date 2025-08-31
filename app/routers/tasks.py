@@ -7,7 +7,7 @@ from app.repositories.project_repository import ProjectRepository
 from app.services.task_service import TaskService
 from app.utils.jwt import get_current_user, require_admin_or_manager
 from app.models.task import TaskStatus, TaskPriority
-from typing import List, Optional
+from typing import Optional
 from app.schemas.task_schema import TaskFilter, TaskStatusUpdate
 from app.models.user import User
 
@@ -24,7 +24,7 @@ def list_tasks_in_project(
     sort_by: str = Query("created_at"),
     sort_order: str = Query("desc", pattern="^(asc|desc)$"),
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user),
+    _: bool = Depends(get_current_user),
 ):
     task_service = TaskService(TaskRepository(db), ProjectRepository(db))
     filters = TaskFilter(
@@ -43,7 +43,7 @@ def update_task_status_forward(
     task_id: int,
     status_update: TaskStatusUpdate,
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user),
+    _: bool = Depends(get_current_user),
 ):
     task_service = TaskService(TaskRepository(db), ProjectRepository(db))
     try:

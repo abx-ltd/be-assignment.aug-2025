@@ -28,7 +28,7 @@ def upload_attachment(
 def list_attachments(
     task_id: int,
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user),
+    _: bool = Depends(get_current_user),
 ):
     service = AttachmentService(AttachmentRepository(db))
     return service.list_by_task(task_id)

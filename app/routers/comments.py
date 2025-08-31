@@ -26,7 +26,7 @@ def create_comment(
 def list_comments(
     task_id: int,
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    _: bool = Depends(get_current_user)
 ):
     service = CommentService(CommentRepository(db))
     return service.list_by_task(task_id)
