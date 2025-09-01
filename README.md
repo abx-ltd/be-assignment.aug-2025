@@ -1,65 +1,78 @@
-📌 Task Management Backend
+# 📌 Task Management Backend
 
-Backend API cho hệ thống quản lý Task, viết bằng FastAPI + SQLAlchemy + PostgreSQL.
-Hỗ trợ authentication bằng JWT, quản lý project, task, comment, attachment (upload file), báo cáo.
+Backend API cho hệ thống quản lý **Task**  
+Công nghệ: **FastAPI + SQLAlchemy + PostgreSQL**  
+Hỗ trợ:
+- Authentication bằng **JWT**
+- Quản lý **Project, Task, Comment, Attachment (upload file)**
+- Báo cáo
 
-🚀 Yêu cầu hệ thống
+---
 
-Windows 10/11
+## 🚀 Yêu cầu hệ thống
 
-Python 3.12+
+- Windows 10/11  
+- Python 3.12+  
+- PostgreSQL 16+  
 
-PostgreSQL 16+
+---
 
-⚙️ Cài đặt
+## ⚙️ Cài đặt
 
-1. Clone source code
-
-Mở Command Prompt (CMD) hoặc PowerShell:
-
+### 1. Clone source code
+```bash
 git clone https://github.com/manhdao1006/be-assignment.aug-2025.git
 cd task-management
+```
+### 2. Tạo virtual environment
+```bash
+python -m venv venv
+venv\Scripts\activate   # Windows
 
-2. Tạo virtual environment
-   python -m venv venv
-   venv\Scripts\activate
+Sau khi chạy lệnh trên, sẽ thấy `(venv)` xuất hiện trong CMD/PowerShell.
+```
+### 3. Cài dependencies
+```bash
+pip install -r requirements.txt
+```
+### 4. Tạo database
+Mở **pgAdmin** hoặc **psql**, chạy lệnh:
 
-Sau khi chạy lệnh trên, sẽ thấy (venv) xuất hiện trong CMD/PowerShell.
-
-3. Cài dependencies
-   pip install -r requirements.txt
-
-4. Tạo database
-
-Mở pgAdmin hoặc psql, chạy lệnh:
-
+```sql
 CREATE DATABASE task_management;
-
-5. Chạy migration
-   alembic upgrade head
-
-▶️ Chạy server
+```
+### 5. Chạy migration
+```bash
+alembic upgrade head
+```
+### ▶️ Chạy server
 
 Trong CMD/PowerShell (vẫn trong virtualenv):
 
+```bash
 uvicorn app.main:app --reload
+```
+- API chạy ở: [http://127.0.0.1:8000](http://127.0.0.1:8000)  
+- Swagger UI: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)  
+- ReDoc: [http://127.0.0.1:8000/redoc](http://127.0.0.1:8000/redoc)  
 
-API chạy ở: http://127.0.0.1:8000
+---
 
-Swagger UI: http://127.0.0.1:8000/docs
+## 📂 Upload file
 
-ReDoc: http://127.0.0.1:8000/redoc
+- File đính kèm được lưu trong thư mục `uploads/`  
+- Giới hạn:
+  - Tối đa **5MB / file**
+  - Tối đa **3 file / task**
 
-📂 Upload file
+---
 
-File đính kèm được lưu trong thư mục uploads/
+## ✅ Test nhanh API
 
-Giới hạn: tối đa 5MB / file, 3 file / task
-
-✅ Test nhanh API
-
-Mở http://127.0.0.1:8000/docs
-
-Đăng nhập, lấy JWT token
-
-Thử gọi API: Project, Task, Comment, Attachment…
+1. Mở [Swagger UI](http://127.0.0.1:8000/docs)  
+2. Đăng nhập, lấy **JWT token**  
+3. Thử gọi các API:
+   - **Project**
+   - **Task**
+   - **Comment**
+   - **Attachment**
