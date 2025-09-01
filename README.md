@@ -1,125 +1,65 @@
-# 📑 Intern Backend Developer Assignment
+📌 Task Management Backend
 
-- Copyright (c) River Flow Solutions, Jsc. 2025. All rights reserved.
-- We only use the submissions for candidates evaluation.
+Backend API cho hệ thống quản lý Task, viết bằng FastAPI + SQLAlchemy + PostgreSQL.
+Hỗ trợ authentication bằng JWT, quản lý project, task, comment, attachment (upload file), báo cáo.
 
-## **A. Instructions**
-- Candidate must fork this repository to a public repo under their name for submission. Notify email `hr@riverflow.solutions` when done.
-- Build a **multi-organization Task Management backend** (organizations → projects → tasks) with basic collaboration and notifications.  
-- **Stack**: Python, FastAPI, PostgreSQL, Redis, Nginx.
-- Use Justfile for all run and development commands.
-- Use Docker for deployment.
-- Deliverables: GitHub repo, ER + System design diagrams, Dockerized deployment, README. 
+🚀 Yêu cầu hệ thống
 
----
+Windows 10/11
 
-## **B. Task Management Requirements & Use Cases**
+Python 3.12+
 
-### **B1. Functional Scope**
-- **Organizations & Users**
-  - Each user belongs to an organization.  
-  - Roles: **Admin**, **Manager**, **Member**.  
+PostgreSQL 16+
 
-- **Projects**
-  - Belong to one organization.  
-  - Can add/remove members.  
-  - Admin/Manager can create projects, Members can only participate.  
+⚙️ Cài đặt
 
-- **Tasks**
-  - CRUD operations.  
-  - Belong to a project.  
-  - Fields: title, description, status (`todo/in-progress/done`), priority (`low/medium/high`), due_date, assignee.  
-  - Status workflow: `todo → in-progress → done` (no complex review step).  
+1. Clone source code
 
-- **Collaboration**
-  - Users can comment on tasks.  
-  - Users can upload simple file attachments (local storage).  
+Mở Command Prompt (CMD) hoặc PowerShell:
 
-- **Notifications**
-  - Users receive a notification when:  
-    - They are assigned a task.  
-    - Task status changes.  
-    - A comment is added to their task.  
+git clone https://github.com/manhdao1006/be-assignment.aug-2025.git
+cd task-management
 
-- **Reports (Basic)**
-  - Count of tasks by status in a project.  
-  - List of overdue tasks.  
+2. Tạo virtual environment
+   python -m venv venv
+   venv\Scripts\activate
 
----
+Sau khi chạy lệnh trên, sẽ thấy (venv) xuất hiện trong CMD/PowerShell.
 
-### **B2. Use Cases**
-1. **User Management**
-   - Register/login with JWT.  
-   - Admin adds users to the organization.  
+3. Cài dependencies
+   pip install -r requirements.txt
 
-2. **Project Management**
-   - Create/list projects.  
-   - Add/remove project members.  
+4. Tạo database
 
-3. **Task Management**
-   - Create tasks with title, description, assignee, priority, due date.  
-   - Update task status (`todo → in-progress → done`).  
-   - List tasks in a project (filter by status, assignee, priority).  
+Mở pgAdmin hoặc psql, chạy lệnh:
 
-4. **Collaboration**
-   - Add comments to tasks.  
-   - Upload attachment to a task.  
+CREATE DATABASE task_management;
 
-5. **Notifications**
-   - Retrieve unread notifications.  
-   - Mark notifications as read.  
+5. Chạy migration
+   alembic upgrade head
 
-6. **Reporting**
-   - Get per-project task count by status.  
-   - Get overdue tasks in a project.  
+▶️ Chạy server
 
----
+Trong CMD/PowerShell (vẫn trong virtualenv):
 
-### **B3. Business Rules**
-- Only project members can create or update tasks in that project.  
-- Only Admin/Manager can assign tasks to others. Members can assign only to themselves.  
-- Due date must be today or in the future (not past).  
-- Task status can only progress forward (`todo → in-progress → done`), but not backward.  
-- Attachments limited to 5MB each, max 3 per task.  
+uvicorn app.main:app --reload
 
----
+API chạy ở: http://127.0.0.1:8000
 
-## **C. Tech Requirements**
-- **Backend**: Python + FastAPI, SQLAlchemy, Alembic migrations.  
-- **Database**: PostgreSQL with foreign keys + indexes.  
-- **Cache/Notify**: Redis for caching task lists and storing notifications.  
-- **Auth**: JWT (PyJWT) + role-based access (Admin/Manager/Member).  
-- **Testing**: pytest with mock PostgreSQL & Redis.  
-- **Deployment**: Docker + docker-compose (FastAPI + PostgreSQL + Redis + Nginx).  
+Swagger UI: http://127.0.0.1:8000/docs
 
----
+ReDoc: http://127.0.0.1:8000/redoc
 
-## **D. Review Criteria**
+📂 Upload file
 
-### **D1. Database & System Design**
-- [ ] Schema with correct relations & constraints.  
-- [ ] Indexes on `users(email)`, `tasks(status, project_id)`.  
-- [ ] ER diagram + system design diagram included.  
+File đính kèm được lưu trong thư mục uploads/
 
-### **D2. Core Functionality**
-- [ ] JWT auth with role-based permissions.  
-- [ ] CRUD for Projects and Tasks with proper rules.  
-- [ ] Status workflow enforced (`todo → in-progress → done`).  
-- [ ] Comments & file attachments working.  
-- [ ] Notifications created on assign/status/comment.  
-- [ ] Basic reporting endpoints working.  
+Giới hạn: tối đa 5MB / file, 3 file / task
 
-### **D3. Code Quality**
-- [ ] Centralized error handling & logging.  
-- [ ] Configurable via `.env`.  
+✅ Test nhanh API
 
-### **D4. Testing**
-- [ ] Coverage ≥ 70%.  
+Mở http://127.0.0.1:8000/docs
 
-### **D5. Deployment**
-- [ ] Nginx configuration.  
-- [ ] Dockerized deployment (Include Nginx)
+Đăng nhập, lấy JWT token
 
-### **D6. Documentation**
-- [ ] README with setup guide.  
-- [ ] API documentation (Swagger UI).
+Thử gọi API: Project, Task, Comment, Attachment…
